@@ -1,0 +1,19 @@
+SQL
+Given the following SQL table:
+CREATE TABLE [dbo].[posts](
+[id] [int] IDENTITY(1,1) NOT NULL,
+[user_id] [int] NOT NULL,
+[date_posted] [datetime] NOT NULL,
+[date_modified] [datetime] NOT NULL,
+[content] [text] NOT NULL,
+CONSTRAINT [PK_posts] PRIMARY KEY CLUSTERED ( [id] ASC )
+)
+
+Write a single query that will get the post id of the most recently modified post for each user
+
+
+SOLUTION:
+
+select id from posts join (select user_id, MAX(date_modified) as maxdate from posts group by user_id) as temp on posts.user_id=temp.user_id and posts.date_modified=temp.maxdate
+
+ 
